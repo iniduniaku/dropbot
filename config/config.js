@@ -6,14 +6,14 @@ module.exports = {
     
     // Donation addresses
     DONATION: {
-        BTC: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
-        ETH: '0x742d35Cc6634C0532925a3b8D654C645E5231dAA',
-        BNB: '0x742d35Cc6634C0532925a3b8D654C645E5231dAA'
+        BTC: '-',
+        ETH: '0xEe44d7Ead8019d9115eC557823498b53Ff0Fd011',
+        BNB: '0xEe44d7Ead8019d9115eC557823498b53Ff0Fd011'
     },
 
     // Messages
     MESSAGES: {
-        WELCOME: `🚀 *Selamat datang di Crypto Airdrop Tracker Bot!*
+        WELCOME: `🚀 *Selamat datang di Catatan Airdrop!*
 
 Bot ini membantu Anda mengelola dan melacak semua tugas airdrop cryptocurrency dalam satu tempat.
 
@@ -64,6 +64,6 @@ Gunakan /menu untuk melihat semua opsi yang tersedia.`,
 • Pantau /claim untuk tidak melewatkan reward
 • Set timeline untuk reminder
 
-Butuh bantuan lebih lanjut? Hubungi admin: @yourusername`
+Butuh bantuan lebih lanjut? Hubungi admin: @@IMN0tH3r0`
     }
 };
