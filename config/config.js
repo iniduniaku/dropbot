@@ -1,24 +1,23 @@
 require('dotenv').config();
 
-module.exports = {
+const config = {
     BOT_TOKEN: process.env.BOT_TOKEN || 'YOUR_BOT_TOKEN_HERE',
     ADMIN_ID: process.env.ADMIN_ID || '123456789',
-    
-    // Donation options
+
     DONATION: {
         TRAKTEER: 'https://trakteer.id/catatanairdrop/tip',
         EVM_WALLET: '0xEe44d7Ead8019d9115eC557823498b53Ff0Fd011'
     },
 
-    // Developer info
     DEVELOPER: {
         NAME: 'Catatan Airdrop',
         TELEGRAM: '@catatanairdrop_bot'
-    },
+    }
+};
 
-    // Messages
-    MESSAGES: {
-        WELCOME: `🚀 *Selamat datang di Catatan Airdrop!*
+// Setelah `config` lengkap, baru kita buat `config.MESSAGES`
+config.MESSAGES = {
+    WELCOME: `🚀 *Selamat datang di Catatan Airdrop!*
 
 Bot ini membantu Anda mengelola dan melacak semua tugas airdrop cryptocurrency dalam satu tempat.
 
@@ -38,7 +37,7 @@ Bot ini membantu Anda mengelola dan melacak semua tugas airdrop cryptocurrency d
 
 Gunakan /menu untuk melihat semua opsi yang tersedia.`,
 
-        HELP: `🆘 *Bantuan Penggunaan Bot*
+    HELP: `🆘 *Bantuan Penggunaan Bot*
 
 *Perintah Utama:*
 /start - Memulai bot dan registrasi
@@ -69,9 +68,10 @@ Gunakan /menu untuk melihat semua opsi yang tersedia.`,
 • Pantau /claim untuk tidak melewatkan reward
 • Set timeline untuk reminder
 
-*Developer:* ${module.exports.DEVELOPER.TELEGRAM}
+*Developer:* ${config.DEVELOPER.TELEGRAM}
 *Channel:* @CatatanAirdrop
 
 Butuh bantuan lebih lanjut? Hubungi developer melalui link di atas.`
-    }
 };
+
+module.exports = config;
