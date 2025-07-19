@@ -4,16 +4,23 @@ module.exports = {
     BOT_TOKEN: process.env.BOT_TOKEN || 'YOUR_BOT_TOKEN_HERE',
     ADMIN_ID: process.env.ADMIN_ID || '123456789',
     
-    // Donation addresses
+    // Donation options
     DONATION: {
-        BTC: '-',
-        ETH: '0xEe44d7Ead8019d9115eC557823498b53Ff0Fd011',
-        BNB: '0xEe44d7Ead8019d9115eC557823498b53Ff0Fd011'
+        TRAKTEER: 'https://trakteer.id/catatanairdrop/tip',
+        EVM_WALLET: '0xEe44d7Ead8019d9115eC557823498b53Ff0Fd011'
+    },
+
+    // Developer info
+    DEVELOPER: {
+        NAME: 'Catatan Airdrop',
+        TELEGRAM: '@catatanairdrop',
+        GITHUB: 'https://github.com/catatanairdrop',
+        WEBSITE: 'https://catatanairdrop.com'
     },
 
     // Messages
     MESSAGES: {
-        WELCOME: `🚀 *Selamat datang di Catatan Airdrop!*
+        WELCOME: `🚀 *Selamat datang di Crypto Airdrop Tracker Bot!*
 
 Bot ini membantu Anda mengelola dan melacak semua tugas airdrop cryptocurrency dalam satu tempat.
 
@@ -64,6 +71,9 @@ Gunakan /menu untuk melihat semua opsi yang tersedia.`,
 • Pantau /claim untuk tidak melewatkan reward
 • Set timeline untuk reminder
 
-Butuh bantuan lebih lanjut? Hubungi admin: @IMN0tH3r0`
+*Developer:* ${module.exports.DEVELOPER.TELEGRAM}
+*Channel:* @CatatanAirdrop
+
+Butuh bantuan lebih lanjut? Hubungi developer melalui link di atas.`
     }
 };
