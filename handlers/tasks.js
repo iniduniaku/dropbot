@@ -25,21 +25,15 @@ class TaskHandler {
                 return;
             }
 
-            const message = `📋 *Daftar Tugas Airdrop (${tasks.length})*\n\nPilih tugas untuk melihat detail, atau filter berdasarkan status:`;
-
-            const keyboard = Markup.inlineKeyboard([
-                [Markup.button.callback('🔍 Filter Status', 'show_status_filter')],
-                ...Keyboards.taskList(tasks, page).reply_markup.inline_keyboard.slice(0, -1), // Remove last row (back button)
-                [Markup.button.callback('🔙 Menu Utama', 'main_menu')]
-            ]);
+            const message = `📋 *Daftar Tugas Airdrop (${tasks.length})*\n\nPilih tugas untuk melihat detail:`;
 
             if (ctx.callbackQuery) {
                 await ctx.editMessageText(message, {
                     parse_mode: 'Markdown',
-                    reply_markup: keyboard.reply_markup
+                    reply_markup: Keyboards.taskList(tasks, page).reply_markup
                 });
             } else {
-                await ctx.replyWithMarkdown(message, keyboard);
+                await ctx.replyWithMarkdown(message, Keyboards.taskList(tasks, page));
             }
         } catch (error) {
             console.error('Error listing tasks:', error);
@@ -150,13 +144,13 @@ class TaskHandler {
 
             switch (session.action) {
                 case 'add_task':
-                    await this.handleAddTaskInput(ctx, session, text);
+                    await TaskHandler.handleAddTaskInput(ctx, session, text);
                     break;
                 case 'edit_task':
-                    await this.handleEditTaskInput(ctx, session, text);
+                    await TaskHandler.handleEditTaskInput(ctx, session, text);
                     break;
                 case 'search_tasks':
-                    await this.handleSearchInput(ctx, text);
+                    await TaskHandler.handleSearchInput(ctx, text);
                     break;
             }
         } catch (error) {
@@ -166,33 +160,38 @@ class TaskHandler {
     }
 
     static async handleAddTaskInput(ctx, session, text) {
-        switch (session.step) {
-            case 'projectName':
-                if (text.length < 2) {
-                    return ctx.reply('❌ Nama project minimal 2 karakter. Silakan coba lagi:');
-                }
-                session.data.projectName = text;
-                session.step = 'projectUrl';
-                await ctx.reply(
-                    `✅ Nama project: *${text}*\n\n` +
-                    `*Langkah 2/3: URL Project*\n` +
-                    `Masukkan link/URL project (harus dimulai dengan http/https):`,
-                    { parse_mode: 'Markdown' }
-                );
-                break;
+        try {
+            switch (session.step) {
+                case 'projectName':
+                    if (text.length < 2) {
+                        return ctx.reply('❌ Nama project minimal 2 karakter. Silakan coba lagi:');
+                    }
+                    session.data.projectName = text;
+                    session.step = 'projectUrl';
+                    await ctx.reply(
+                        `✅ Nama project: *${text}*\n\n` +
+                        `*Langkah 2/3: URL Project*\n` +
+                        `Masukkan link/URL project (harus dimulai dengan http/https):`,
+                        { parse_mode: 'Markdown' }
+                    );
+                    break;
 
-            case 'projectUrl':
-                if (!Helpers.validateUrl(text)) {
-                    return ctx.reply('❌ URL tidak valid. Pastikan dimulai dengan http:// atau https://. Silakan coba lagi:');
-                }
-                session.data.projectUrl = text;
-                session.step = 'optional';
-                await this.askOptionalData(ctx);
-                break;
+                case 'projectUrl':
+                    if (!Helpers.validateUrl(text)) {
+                        return ctx.reply('❌ URL tidak valid. Pastikan dimulai dengan http:// atau https://. Silakan coba lagi:');
+                    }
+                    session.data.projectUrl = text;
+                    session.step = 'optional';
+                    await TaskHandler.askOptionalData(ctx);
+                    break;
 
-            case 'optional':
-                await this.handleOptionalInput(ctx, session, text);
-                break;
+                case 'optional':
+                    await TaskHandler.handleOptionalInput(ctx, session, text);
+                    break;
+            }
+        } catch (error) {
+            console.error('Error in handleAddTaskInput:', error);
+            await ctx.reply('❌ Terjadi kesalahan. Silakan coba lagi.');
         }
     }
 
@@ -222,7 +221,7 @@ class TaskHandler {
 
     static async handleOptionalInput(ctx, session, text) {
         if (text.toLowerCase() === 'selesai') {
-            await this.saveTask(ctx, session);
+            await TaskHandler.saveTask(ctx, session);
             return;
         }
 
@@ -269,7 +268,7 @@ class TaskHandler {
             }
         }
 
-        await this.saveTask(ctx, session);
+        await TaskHandler.saveTask(ctx, session);
     }
 
     static async saveTask(ctx, session) {
@@ -307,6 +306,11 @@ class TaskHandler {
         }
     }
 
+    static async handleEditTaskInput(ctx, session, text) {
+        // Implementation for edit task - placeholder
+        await ctx.reply('❌ Fitur edit belum tersedia. Gunakan /menu untuk kembali ke menu utama.');
+    }
+
     static async changeTaskStatus(ctx, taskId) {
         try {
             const message = `🔄 *Ubah Status Tugas*\n\nPilih status baru untuk tugas ini:`;
@@ -336,7 +340,7 @@ class TaskHandler {
             if (updatedTask) {
                 const statusInfo = Helpers.getStatusInfo(newStatus);
                 await ctx.answerCbQuery(`✅ Status diubah menjadi: ${statusInfo.text}`);
-                await this.viewTask(ctx, taskId);
+                await TaskHandler.viewTask(ctx, taskId);
             } else {
                 await ctx.answerCbQuery('❌ Gagal mengubah status.');
             }
@@ -393,7 +397,7 @@ class TaskHandler {
 
             if (success) {
                 await ctx.answerCbQuery('✅ Tugas berhasil dihapus!');
-                await this.listTasks(ctx);
+                await TaskHandler.listTasks(ctx);
             } else {
                 await ctx.answerCbQuery('❌ Gagal menghapus tugas.');
             }
@@ -468,7 +472,7 @@ class TaskHandler {
             }
 
             ctx.user = user;
-            await this.listTasks(ctx);
+            await TaskHandler.listTasks(ctx);
         } catch (error) {
             console.error('Error in list command:', error);
             await ctx.reply('❌ Gagal menampilkan daftar tugas.');
@@ -485,7 +489,7 @@ class TaskHandler {
             }
 
             ctx.user = user;
-            await this.startAddTask(ctx);
+            await TaskHandler.startAddTask(ctx);
         } catch (error) {
             console.error('Error in add command:', error);
             await ctx.reply('❌ Gagal memulai penambahan tugas.');
