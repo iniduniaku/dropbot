@@ -160,14 +160,18 @@ class Keyboards {
         ]);
     }
 
+    // Simplified donation keyboard with only Trakteer and EVM wallet
     static donation() {
         return Markup.inlineKeyboard([
             [
-                Markup.button.callback('📋 Copy BTC', 'copy_btc'),
-                Markup.button.callback('📋 Copy ETH', 'copy_eth')
+                Markup.button.url('🎁 Trakteer', require('../config/config').DONATION.TRAKTEER)
             ],
             [
-                Markup.button.callback('📋 Copy BNB', 'copy_bnb')
+                Markup.button.callback('💰 EVM Wallet', 'show_wallet')
+            ],
+            [
+                Markup.button.callback('📞 Contact', 'contact_dev'),
+                Markup.button.callback('📢 Channel', 'show_channel')
             ],
             [
                 Markup.button.callback('🔙 Menu Utama', 'main_menu')
@@ -175,7 +179,37 @@ class Keyboards {
         ]);
     }
 
-    // New: Filter tasks by status
+    // Wallet display keyboard
+    static walletKeyboard() {
+        return Markup.inlineKeyboard([
+            [
+                Markup.button.callback('📋 Copy Address', 'copy_wallet')
+            ],
+            [
+                Markup.button.callback('🔙 Kembali Donasi', 'show_donation'),
+                Markup.button.callback('🏠 Menu Utama', 'main_menu')
+            ]
+        ]);
+    }
+
+    // Developer info keyboard
+    static developerInfo() {
+        return Markup.inlineKeyboard([
+            [
+                Markup.button.url('📱 Telegram', `https://t.me/${require('../config/config').DEVELOPER.TELEGRAM.replace('@', '')}`),
+                Markup.button.url('📢 Channel', 'https://t.me/CatatanAirdrop')
+            ],
+            [
+                Markup.button.url('💻 GitHub', require('../config/config').DEVELOPER.GITHUB)
+            ],
+            [
+                Markup.button.callback('💝 Donasi', 'show_donation'),
+                Markup.button.callback('🔙 Menu Utama', 'main_menu')
+            ]
+        ]);
+    }
+
+    // Filter tasks by status
     static statusFilter() {
         return Markup.inlineKeyboard([
             [
