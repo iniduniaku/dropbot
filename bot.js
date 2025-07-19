@@ -29,15 +29,22 @@ bot.command('start', AuthHandler.handleStart);
 bot.command('menu', AuthHandler.ensureUser, MenuHandler.showMainMenu);
 bot.command('help', MenuHandler.showHelp);
 bot.command('donate', MenuHandler.showDonation);
+bot.command('wallet', MenuHandler.showWallet);
+bot.command('contact', MenuHandler.showDeveloperContact);
+bot.command('channel', MenuHandler.showChannel);
 bot.command('list', TaskHandler.handleListCommand);
 bot.command('add', TaskHandler.handleAddCommand);
 bot.command('stats', StatsHandler.handleStatsCommand);
-bot.command('claim', TaskHandler.handleClaimCommand); // New command
+bot.command('claim', TaskHandler.handleClaimCommand);
 
 // Callback query handlers
 bot.action('main_menu', AuthHandler.ensureUser, MenuHandler.showMainMenu);
 bot.action('show_help', AuthHandler.ensureUser, MenuHandler.showHelp);
 bot.action('show_donation', AuthHandler.ensureUser, MenuHandler.showDonation);
+bot.action('show_wallet', AuthHandler.ensureUser, MenuHandler.showWallet);
+bot.action('copy_wallet', AuthHandler.ensureUser, MenuHandler.copyWallet);
+bot.action('contact_dev', AuthHandler.ensureUser, MenuHandler.showDeveloperContact);
+bot.action('show_channel', AuthHandler.ensureUser, MenuHandler.showChannel);
 bot.action('show_stats', AuthHandler.ensureUser, StatsHandler.showStats);
 
 // Task actions
@@ -45,7 +52,7 @@ bot.action('add_task', AuthHandler.ensureUser, TaskHandler.startAddTask);
 bot.action('list_tasks', AuthHandler.ensureUser, (ctx) => TaskHandler.listTasks(ctx));
 bot.action('search_tasks', AuthHandler.ensureUser, TaskHandler.startSearch);
 
-// New: Status filter actions
+// Status filter actions
 bot.action('show_status_filter', AuthHandler.ensureUser, TaskHandler.showStatusFilter);
 bot.action(/filter_status:(.+)/, AuthHandler.ensureUser, (ctx) => {
     const status = ctx.match[1];
@@ -92,11 +99,6 @@ bot.action(/set_status:(.+):(.+)/, AuthHandler.ensureUser, (ctx) => {
     return TaskHandler.setTaskStatus(ctx, taskId, status);
 });
 
-// Donation copy actions
-bot.action('copy_btc', (ctx) => MenuHandler.handleDonationCopy(ctx, 'btc'));
-bot.action('copy_eth', (ctx) => MenuHandler.handleDonationCopy(ctx, 'eth'));
-bot.action('copy_bnb', (ctx) => MenuHandler.handleDonationCopy(ctx, 'bnb'));
-
 // Text message handler
 bot.on('text', TaskHandler.handleTextInput);
 
@@ -112,6 +114,9 @@ async function startBot() {
         await bot.launch();
         console.log('🚀 Airdrop Tracker Bot started successfully!');
         console.log('Bot username:', bot.botInfo?.username);
+        console.log('Donation configured:');
+        console.log('- Trakteer:', config.DONATION.TRAKTEER);
+        console.log('- EVM Wallet:', config.DONATION.EVM_WALLET);
         
         // Graceful shutdown
         process.once('SIGINT', () => bot.stop('SIGINT'));
