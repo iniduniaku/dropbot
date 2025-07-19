@@ -64,6 +64,6 @@ Gunakan /menu untuk melihat semua opsi yang tersedia.`,
 • Pantau /claim untuk tidak melewatkan reward
 • Set timeline untuk reminder
 
-Butuh bantuan lebih lanjut? Hubungi admin: @@IMN0tH3r0`
+Butuh bantuan lebih lanjut? Hubungi admin: @IMN0tH3r0`
     }
 };
