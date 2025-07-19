@@ -4,7 +4,7 @@ const config = require('../config/config');
 class MenuHandler {
     static async showMainMenu(ctx) {
         try {
-            const message = `🚀 *Menu Utama - Airdrop Tracker*\n\n` +
+            const message = `🚀 *Menu Utama - Catatan Airdrop*\n\n` +
                           `Selamat datang kembali, ${ctx.user.firstName}!\n` +
                           `Pilih menu di bawah untuk mengelola tugas airdrop Anda:`;
 
@@ -120,7 +120,7 @@ class MenuHandler {
             const message = `👨‍💻 *Contact Developer*\n\n` +
                           `*Developer:* ${config.DEVELOPER.NAME}\n` +
                           `*Telegram:* ${config.DEVELOPER.TELEGRAM}\n` +
-                          `*Channel:* @CatatanAirdrop\n\n` +
+                          `*Channel:* https://t.me/catatanairdropbot\n\n` +
                           `📋 *Layanan yang tersedia:*\n` +
                           `• Custom bot development\n` +
                           `• Bug reports dan feature requests\n` +
@@ -174,7 +174,7 @@ class MenuHandler {
                 await ctx.editMessageText(message, {
                     parse_mode: 'Markdown',
                     reply_markup: Markup.inlineKeyboard([
-                        [Markup.button.url('📢 Join Channel', 'https://t.me/CatatanAirdrop')],
+                        [Markup.button.url('📢 Join Channel', 'https://t.me/catatanairdropbot')],
                         [
                             Markup.button.callback('💝 Donasi', 'show_donation'),
                             Markup.button.callback('🔙 Menu Utama', 'main_menu')
@@ -183,7 +183,7 @@ class MenuHandler {
                 });
             } else {
                 await ctx.replyWithMarkdown(message, Markup.inlineKeyboard([
-                    [Markup.button.url('📢 Join Channel', 'https://t.me/CatatanAirdrop')],
+                    [Markup.button.url('📢 Join Channel', 'https://t.me/catatanairdropbot')],
                     [
                         Markup.button.callback('💝 Donasi', 'show_donation'),
                         Markup.button.callback('🔙 Menu Utama', 'main_menu')
