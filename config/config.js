@@ -13,14 +13,12 @@ module.exports = {
     // Developer info
     DEVELOPER: {
         NAME: 'Catatan Airdrop',
-        TELEGRAM: '@catatanairdrop',
-        GITHUB: 'https://github.com/catatanairdrop',
-        WEBSITE: 'https://catatanairdrop.com'
+        TELEGRAM: '@catatanairdrop_bot'
     },
 
     // Messages
     MESSAGES: {
-        WELCOME: `🚀 *Selamat datang di Crypto Airdrop Tracker Bot!*
+        WELCOME: `🚀 *Selamat datang di Catatan Airdrop!*
 
 Bot ini membantu Anda mengelola dan melacak semua tugas airdrop cryptocurrency dalam satu tempat.
 
